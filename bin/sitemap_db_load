@@ -2,14 +2,80 @@
 
 use Getopt::Long;
 use Sitemap::DB;
+use Pod::Usage;
+
+=head1 NAME
+
+sitemap_db_load
+
+=head1 DESCRIPTION
+
+This can be used to load a set of sitemaps into a database quickly and easily.
+
+=head1 SYNOPSIS
+
+	sitemap_db_load
+		--index_file_glob=...
+		[--working_directory=...]
+		[--connection_string=(dbi dsn)]
+		[--username=...] 
+		[--password=...]
+
+=head1 OPTIONS
+
+=head2 index_file_glob
+
+A string value passed to the perl glob subroutine to get a list of index files
+to load.  The index file is added to the database, then for each file in the
+index files, the file is loaded then all of the urls in the file.
+
+=head2 working_directory
+
+Sets the working directory for the file.  The code actually contains a chdir
+to that directory, to buyer beware.
+
+This defaults to '.'.
+
+=head2 connection_string
+
+Sets the connection string (dsn) to connect to.  Since I'm a huge postgres fan,
+and did all of the unit testing using postgres, this defaults to:
+
+	dbi:Pg:host=localhost;dbname=sitemap_db
+
+I strongly suggest that you use PostgreSQL, as I haven't done extensive testing
+in anything else.  I also suggest that you just use PostgreSQL for all of your
+database needs in general.
+
+=head2 username
+
+The database connection username.
+
+=head2 password
+
+The database connection password.
+
+=head1 AUTHOR
+
+Paul Salcido <psalcido at manta dot com>, Manta Development Team
+
+=cut
+
 
 my %options = (
 	"connection_string" => "dbi:Pg:host=localhost;dbname=sitemap_db",
 	"username" => "sitemap_db",
 	"password" => "sitemap_db",
+	"working_directory" => '.',
 );
 
-GetOptions(\%options,"index_file_glob=s","working_directory=s");
+GetOptions(\%options,
+	"index_file_glob=s",
+	"working_directory=s",
+	"username=s",
+	"password=s",
+	"connection_string=s",
+);
 
 my $loader = Sitemap::DB->new(%options);
 
