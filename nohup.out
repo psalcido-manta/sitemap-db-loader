@@ -1,0 +1,3 @@
+DBIx::Class::ResultSet::create(): DBI Exception: DBD::Pg::st execute failed: ERROR:  duplicate key value violates unique constraint "filename_uniqueness"
+DETAIL:  Key (filename)=(site_map_megabrowse_55_index_1.xml) already exists. [for Statement "INSERT INTO sitemap_index ( created, filename, id) VALUES ( ?, ?, ? )" with ParamValues: 1='2013-04-22 21:24:41+0000', 2='site_map_megabrowse_55_index_1.xml', 3='fa881bbc-e224-4398-8c71-0ccad60eed88'] at lib/Sitemap/DB/Schema.pm line 40
+DBIx::Class::Carp::__ANON__(): A DBIx::Class::Storage::TxnScopeGuard went out of scope without explicit commit or error. Rolling back. at /usr/share/perl5/DBIx/Class/Storage/TxnScopeGuard.pm line 132

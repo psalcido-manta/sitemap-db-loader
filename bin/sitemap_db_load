@@ -1,0 +1,16 @@
+#! /usr/bin/perl
+
+use Getopt::Long;
+use Sitemap::DB;
+
+my %options = (
+	"connection_string" => "dbi:Pg:host=localhost;dbname=sitemap_db",
+	"username" => "sitemap_db",
+	"password" => "sitemap_db",
+);
+
+GetOptions(\%options,"index_file_glob=s","working_directory=s");
+
+my $loader = Sitemap::DB->new(%options);
+
+$loader->load;
